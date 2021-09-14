@@ -43,7 +43,7 @@ class MarkovEmulator extends LitElement {
     });
 
     Prism.languages.markov = {
-      operator: /(?:->|\|->)/
+      operator: /(?:->|\|->|=>)/
     };
   }
 
@@ -145,8 +145,14 @@ class MarkovEmulator extends LitElement {
       let [ alpha, beta ] = rule.split('|->');
       terminal = (beta !== undefined);
 
-      if (!terminal)
+      if (!terminal) {
+        [ alpha, beta ] = rule.split('=>');
+        terminal = (beta !== undefined);
+      }
+
+      if (!terminal) {
         [ alpha, beta ] = rule.split('->');
+      }
 
       //if (beta === undefined) console.log('Syntax error');
 
