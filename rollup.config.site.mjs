@@ -6,7 +6,7 @@ import { terser } from 'rollup-plugin-terser';
 import svg from 'rollup-plugin-svg'
 
 export default {
-  input: 'src/web-site.mjs',
+  input: 'src/markov-emulator.mjs',
   output: {
     sourcemap: false,
     format: 'umd',

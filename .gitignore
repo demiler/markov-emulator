@@ -4,6 +4,7 @@ node_modules
 Thumbs.db
 *.bak
 *~
+dist
 github\.key*
 .firebase*
 .firebase/**
