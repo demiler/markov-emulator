@@ -19,12 +19,18 @@ class MarkovEmulator extends LitElement {
     this.history = [{}];
     this.lines = [];
     this.curStep = 0;
-    this.input = "abbaba";
+
+    this.input = localStorage.getItem('input');
+    if (this.input === null) this.input = "abbaba";
+
+    this.rawCode = localStorage.getItem('code');
+    if (rawCode === null) this.rawCode = CODE_MARKOV;
 
     this.shortcuts = {
       "Digit1": this.step,
       "Digit2": this.play,
-      "Digit3": this.reset
+      "Digit3": this.reset,
+      "Digit9": () => { this.codeUpdate({ detail: CODE_MARKOV }) }
     };
 
     window.addEventListener("keydown", (e) => {
@@ -52,7 +58,7 @@ class MarkovEmulator extends LitElement {
         <lit-code
             id="editor"
             language="markov"
-            code=${CODE_MARKOV}
+            code=${this.rawCode}
             @update=${this.codeUpdate}
             linenumbers
             ?running=${this.running}
@@ -66,7 +72,7 @@ class MarkovEmulator extends LitElement {
                id="string"
                .value=${this.input}
                placeholder="Enter something"
-               @input=${({target}) => this.input = target.value }
+               @input=${this.inputUpdate}
                ?disabled=${this.running}
         >
         <div id="buttons">
@@ -173,8 +179,14 @@ class MarkovEmulator extends LitElement {
     this.needReset = false;
   }
 
+  inputUpdate({ target }) {
+    this.input = target.value;
+    localStorage.setItem('input', this.input);
+  }
+
   codeUpdate({ detail: code }) {
     this.code = code.split('\n');
+    localStorage.setItem('code', code);
   }
 };
 
