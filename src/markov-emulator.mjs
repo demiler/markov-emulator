@@ -26,6 +26,8 @@ class MarkovEmulator extends LitElement {
     this.rawCode = localStorage.getItem('code');
     if (this.rawCode === null) this.rawCode = CODE_MARKOV;
 
+    this.reset();
+
     this.shortcuts = {
       "Digit1": this.step,
       "Digit2": this.play,
