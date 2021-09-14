@@ -19,7 +19,7 @@ class MarkovEmulator extends LitElement {
     this.history = [{}];
     this.lines = [];
     this.curStep = 0;
-    this.input = "aboba";
+    this.input = "abbaba";
 
     this.shortcuts = {
       "Digit1": this.step,
