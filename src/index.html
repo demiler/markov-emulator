@@ -1,1 +1,63 @@
-../index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>lit-code</title>
+  <!--<link rel="modulepreload" href="/index.mjs" as="script">-->
+  <script type="module" src="/index.mjs" defer></script>
+</head>
+<body>
+<style>
+  :root {
+    --color-bg: #fff;
+    --color-bg-input: #fff;
+    --color-bg-light: #dfdfdf;
+    --color-text: #0a0a0a;
+    --color-text-secondary: #4d4d4d;
+    --color-secondary: #000;
+    --color-border: #cfdbe1;
+  }
+
+  html, body {
+   overflow-x: hidden; 
+   margin: 0;
+   height: 100%;
+   width: 100%;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+  }
+
+  h1 {
+    margin-top: 50px;
+    text-align: center;
+  }
+
+  #hint {
+    margin: 0 auto;
+    width: 800px;
+    margin-top: 20px;
+    font-size: 1.3em;
+  }
+
+  kbd {
+    background-color: var(--color-bg-light);
+    padding: 2px 8px;
+    border-radius: 8px;
+    border-bottom: 2px solid #444;
+    margin: 0 .2em;
+    font-size: .9em;
+  }
+
+</style>
+  <h1>Markov emulator</h1>
+  <markov-emulator></markov-emulator>
+  <div id="hint">
+    Hint: use <kbd>ctrl+1</kbd> to step, <kbd>ctrl+2</kbd> to play, <kbd>ctrl+3</kbd> to reset.
+  </div>
+</body>
+</html>
