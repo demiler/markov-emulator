@@ -165,7 +165,7 @@ class MarkovEmulator extends LitElement {
 
     if (showCurrent) this.setLineHighlite(step - 1);
 
-    this.history.push({ change: before, rule: this.code[step - 1] });
+    this.history.push({ change: this.input, rule: this.code[step - 1] });
     if (notReplaced || terminal) {
       this.running = false;
       this.needReset = true;
@@ -187,6 +187,7 @@ class MarkovEmulator extends LitElement {
 
   inputUpdate({ target }) {
     this.input = target.value;
+    this.history = [ { change: this.input, rule: ' ' } ];
     localStorage.setItem('input', this.input);
   }
 
