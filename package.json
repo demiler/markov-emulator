@@ -25,8 +25,7 @@
   "scripts": {
     "dev": "rollup --watch --config rollup.config.dev.mjs",
     "site": "rollup --config rollup.config.site.mjs",
-    "sync": "git checkout master src/lit-code*",
-    "deploy": "npm run sync; npm run site; git add index.mjs; git commit -m \"deploy build\"; git push origin website"
+    "deploy": "npm run site; git add index.mjs; git commit -m \"deploy build\"; git push origin gh-pages"
   },
   "dependencies": {
     "lit": "^2.0.0-rc.2",

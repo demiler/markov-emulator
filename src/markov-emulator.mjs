@@ -22,6 +22,7 @@ class MarkovEmulator extends LitElement {
 
     this.input = localStorage.getItem('input');
     if (this.input === null) this.input = "abbaba";
+    this.lastUnmodifedInput = this.input;
 
     this.rawCode = localStorage.getItem('code');
     if (this.rawCode === null) this.rawCode = CODE_MARKOV;
@@ -88,11 +89,14 @@ class MarkovEmulator extends LitElement {
         <div id="terminated">S T O P</div>
         ${this.history.map((his, i) => html`
           <div class='line'>${i}</div>
-          <div class='rule'>${his.change}</div>
+          <div class='change'>${his.change}</div>
 
           ${!(i > 0) ? html`` : html`
             <div class='empty-line'></div>
-            <div class='change'>${his.rule}</div>
+            <div class='rule'>
+              <hr>
+              <div>${his.rule}</div>
+            </div>
           `}
         `).reverse()}
       </div>
@@ -158,16 +162,20 @@ class MarkovEmulator extends LitElement {
 
       //if (beta === undefined) console.log('Syntax error');
 
-      before = this.input;
-      this.input = this.input.replace(alpha, beta);
-      notReplaced = (before === this.input);
+      if (this.input.includes(alpha)) {
+        this.input = this.input.replace(alpha, beta);
+        notReplaced = false;
+      }
 
       step++;
     }
 
     if (showCurrent) this.setLineHighlite(step - 1);
 
-    this.history.push({ change: this.input, rule: this.code[step - 1] });
+    rule = this.code[step - 1].replace(/(?:\|->|=>)/, '↦');
+    rule = rule.replace('->', '→');
+    this.history.push({ change: this.input, rule });
+
     if (notReplaced || terminal) {
       this.running = false;
       this.needReset = true;
@@ -178,10 +186,12 @@ class MarkovEmulator extends LitElement {
   }
 
   hardReset() {
+    this.input = this.lastUnmodifedInput;
     this.reset();
   }
 
   reset() {
+    this.lastUnmodifedInput = this.input;
     this.history = [ { change: this.input, rule: ' ' } ];
     this.running = false;
     this.needReset = false;
