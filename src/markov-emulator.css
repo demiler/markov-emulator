@@ -1,10 +1,10 @@
 :host {
   display: grid;
-  grid-template-columns: 350px auto;
-  grid-template-rows: 30px 80px auto;
+  grid-template-columns: 360px 1fr;
+  grid-template-rows: 30px 80px 1fr;
 
   width: 100%;
-  max-width: 850px;
+  max-width: 860px;
   height: 500px;
   max-height: 500px;
 
@@ -127,6 +127,7 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
+    user-select: none;
 
     & button#step {
       background-color: #ffe279;
@@ -290,5 +291,4 @@
   #controls {
     grid-row: 2;
   }
-
 }
