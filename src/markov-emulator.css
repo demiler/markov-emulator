@@ -1,7 +1,7 @@
 :host {
   display: grid;
   grid-template-columns: 300px auto;
-  grid-template-rows: 80px auto;
+  grid-template-rows: 30px 80px auto;
 
   width: 100%;
   max-width: 800px;
@@ -13,8 +13,23 @@
 
 }
 
+#status {
+  grid-column: 1/3;
+  padding: 4px 8px;
+  border-radius: 8px;
+  text-align: center;
+  letter-spacing: 3em;
+  text-indent: 3em;
+  text-transform: uppercase;
+  background-color: #fff1af;
+}
+
+#status[running] {
+  background-color: #c4ffa6a8;
+}
+
 #editor-wrap {
-  grid-row: 1/3;
+  grid-row: 2/4;
   width: 100%;
   height: 100%;
   max-height: inherit;
@@ -87,6 +102,7 @@
 }
 
 #controls {
+  grid-row: 2;
   & #string {
     box-sizing: border-box;
     width: 100%;
@@ -147,6 +163,7 @@
 }
 
 #history {
+  grid-row: 3;
   grid-column: 2;
   --line-height: 15pt;
 
@@ -244,4 +261,33 @@
       text-align: right;
     }
   }
+}
+
+@media (max-width: 500px) {
+  :host {
+    grid-template-columns: 1fr;
+    grid-template-rows: 30px 80px 300px 300px;
+
+    max-height: unset;
+    height: unset;
+    width: 100%;
+    padding: 0 8px;
+    box-sizing: border-box;
+    margin-top: 20px;
+  }
+
+  #status {
+    letter-spacing: 2em;
+    text-indent: 2em;
+  }
+
+  #status, #editor-wrap, #controls, #history {
+    grid-row: unset;
+    grid-column: unset;
+  }
+
+  #controls {
+    grid-row: 2;
+  }
+
 }
