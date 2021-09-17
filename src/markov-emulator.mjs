@@ -3,7 +3,7 @@ import style from './markov-emulator.css'
 import 'prismjs';
 import 'lit-code';
 
-const CODE_MARKOV = "*a -> A\n*b -> B\nAa -> aA\nAb -> bA\nBa -> aB\nBb -> bB\nA |-> a\nB |-> b\n* |-> \n -> *";
+const CODE_MARKOV = "#This program moves a, b\n#letters to the end of the word\n*a -> A\n*b -> B\nAa -> aA\nAb -> bA\nBa -> aB\nBb -> bB\nA |-> a\nB |-> b\n* |-> \n -> *";
 
 class MarkovEmulator extends LitElement {
   static styles = [ style ];
@@ -46,7 +46,8 @@ class MarkovEmulator extends LitElement {
     });
 
     Prism.languages.markov = {
-      operator: /(?:->|\|->|=>)/
+      operator: /(?:->|\|->|=>)/,
+      comment: /#.*/
     };
   }
 
@@ -64,6 +65,7 @@ class MarkovEmulator extends LitElement {
             id="editor"
             language="markov"
             code=${this.rawCode}
+            @focus=${this.hideLineHl}
             @update=${this.codeUpdate}
             linenumbers
             ?running=${this.running}
@@ -77,6 +79,7 @@ class MarkovEmulator extends LitElement {
                id="string"
                .value=${this.input}
                placeholder="Enter something"
+               @keydown=${this.rejectIncorrect}
                @input=${this.inputUpdate}
                ?disabled=${this.running}
         >
@@ -147,7 +150,7 @@ class MarkovEmulator extends LitElement {
     let before = this.input, rule = '';
 
     while (notReplaced && step < this.code.length) {
-      rule = this.code[step].replace(/ +/g, '');
+      rule = this.code[step].replace(/ +/g, '').replace(/#.*/, '')
       if (rule.length === 0) { step++; continue; }
 
       let [ alpha, beta ] = rule.split('|->');
@@ -162,7 +165,8 @@ class MarkovEmulator extends LitElement {
         [ alpha, beta ] = rule.split('->');
       }
 
-      //if (beta === undefined) console.log('Syntax error');
+      if (beta === undefined)
+        console.log(`Syntax error [line ${step}]: ${this.code[step]}`);
 
       if (this.input.includes(alpha)) {
         this.input = this.input.replace(alpha, beta);
@@ -189,6 +193,17 @@ class MarkovEmulator extends LitElement {
     }
 
     return true;
+  }
+
+  rejectIncorrect(e) {
+    if (['#', ' '].includes(e.key)) {
+      e.preventDefault();
+      console.log('Space and # symbols are not allowed');
+    }
+  }
+
+  hideLineHl() {
+    if (this.needReset) this.reset();
   }
 
   hardReset() {

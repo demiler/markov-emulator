@@ -1,10 +1,10 @@
 :host {
   display: grid;
-  grid-template-columns: 300px auto;
+  grid-template-columns: 350px auto;
   grid-template-rows: 30px 80px auto;
 
   width: 100%;
-  max-width: 800px;
+  max-width: 850px;
   height: 500px;
   max-height: 500px;
 
@@ -76,6 +76,7 @@
   --lines-bg-color: var(--color-bg-light);
   --lines-text-color: var(--color-text-secondary);
   --hl-color-operator: #dd0000;
+  --hl-color-comment: #3d9648;
   --line-height: 20px;
 }
 
