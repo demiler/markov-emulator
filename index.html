@@ -21,7 +21,6 @@
   }
 
   html, body {
-   overflow-x: hidden; 
    margin: 0;
    height: 100%;
    width: 100%;
@@ -53,6 +52,17 @@
     font-size: .9em;
   }
 
+  @media (max-width: 500px) {
+    h1 {
+      margin-top: 20px;
+    }
+
+    #hint, #note {
+      width: 100%;
+      padding: 0 8px; 
+      box-sizing: border-box;
+    }
+  }
 </style>
   <h1>Markov emulator</h1>
   <markov-emulator></markov-emulator>
