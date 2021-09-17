@@ -54,6 +54,7 @@
   & #editor[completed] + #current-rule {
     background-color: red;
     z-index: 4;
+    pointer-events: none;
   }
 }
 
