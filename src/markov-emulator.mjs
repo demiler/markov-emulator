@@ -33,7 +33,7 @@ class MarkovEmulator extends LitElement {
       "Digit1": this.step,
       "Digit2": this.play,
       "Digit3": this.reset,
-      "Digit9": () => { this.codeUpdate({ detail: CODE_MARKOV }) }
+      "Digit9": () => { this.editor.setCode(CODE_MARKOV) }
     };
 
     window.addEventListener("keydown", (e) => {
@@ -57,6 +57,8 @@ class MarkovEmulator extends LitElement {
 
   render() {
     return html`
+      <div id="status" ?running=${this.running}>${this.running ? "running" : "idle"}</div>
+
       <div id="editor-wrap">
         <lit-code
             id="editor"
@@ -142,7 +144,7 @@ class MarkovEmulator extends LitElement {
 
     this.running = true;
     let step = 0, notReplaced = true, terminal = false;
-    let before = '', rule = '';
+    let before = this.input, rule = '';
 
     while (notReplaced && step < this.code.length) {
       rule = this.code[step].replace(/ +/g, '');
@@ -175,6 +177,10 @@ class MarkovEmulator extends LitElement {
     rule = this.code[step - 1].replace(/(?:\|->|=>)/, '↦');
     rule = rule.replace('->', '→');
     this.history.push({ change: this.input, rule });
+
+    if (this.input == before) { //force update if input didn't change
+      this.requestUpdate();
+    }
 
     if (notReplaced || terminal) {
       this.running = false;
