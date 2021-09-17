@@ -21,7 +21,10 @@ export default {
       host: '0.0.0.0',
       port: 8080,
     }),
-    livereload(),
+    livereload({
+      watch: 'dist',
+      exts: [ 'html', 'mjs', 'css' ]
+    }),
     postcss({
       inject: false,
     }),
